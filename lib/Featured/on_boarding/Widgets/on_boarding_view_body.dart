@@ -12,7 +12,6 @@ class OnBoardingViewBody extends StatelessWidget {
     var cubit = BlocProvider.of<AppCubit>(context);
     return BlocConsumer<AppCubit, AppState>(
       listener: (context, state) {
-        // TODO: implement listener
       },
       builder: (context, state) {
         return Column(
