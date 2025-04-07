@@ -1,9 +1,14 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/Core/Cache/cache_helper.dart';
 import 'package:store/Cubit/App_cubit/app_state.dart';
 
 class AppCubit extends Cubit<AppState> {
-  AppCubit() : super(IntialAppState());
+  AppCubit() : super(IntialAppState()) {
+    isDark = CacheHelper.getData(key: 'isDark') ?? false;
+  }
+
+  PageController pageController = PageController();
   bool isDark = false;
 
   void changeAppMode({bool? fromShared}) {
