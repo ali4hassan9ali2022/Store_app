@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:store/Core/Controllers/Navigato_to.dart';
 import 'package:store/Cubit/App_cubit/app_cubit.dart';
 import 'package:store/Featured/Login_register/Views/log_in_view.dart';
 import 'package:store/Models/on_boarding_model.dart';
@@ -34,11 +35,7 @@ class CustomPageIndicator extends StatelessWidget {
         FloatingActionButton(
           onPressed: () {
             if (cubit.isLast) {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                LogInView.id,
-                (route) => false,
-              );
+              NavigatoTo.pushNamedAndRemoveTo(context, LogInView.id);
             } else {
               cubit.pageController.nextPage(
                 duration: const Duration(milliseconds: 750),
@@ -47,10 +44,7 @@ class CustomPageIndicator extends StatelessWidget {
             }
           },
           backgroundColor: Colors.deepOrange,
-          child: const Icon(
-            Icons.arrow_forward_ios,
-            color: Colors.white,
-          ),
+          child: const Icon(Icons.arrow_forward_ios, color: Colors.white),
         ),
       ],
     );

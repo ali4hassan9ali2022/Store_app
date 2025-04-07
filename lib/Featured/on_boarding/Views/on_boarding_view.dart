@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:store/Core/Controllers/Navigato_to.dart';
 import 'package:store/Featured/Login_register/Views/log_in_view.dart';
 import 'package:store/Featured/on_boarding/Widgets/on_boarding_view_body.dart';
 
@@ -12,11 +13,7 @@ class OnBoardingView extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                LogInView.id,
-                (route) => false,
-              );
+              NavigatoTo.pushNamedAndRemoveTo(context, LogInView.id);
             },
             child: const Text(
               "Skip",

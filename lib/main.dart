@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/Core/Cache/cache_helper.dart';
 import 'package:store/Cubit/App_cubit/app_cubit.dart';
 import 'package:store/Cubit/App_cubit/app_state.dart';
+import 'package:store/Cubit/Log_in_cubit/log_in_cubit.dart';
 import 'package:store/Cubit/splash_cubit/splash_cubit.dart';
 import 'package:store/Featured/Login_register/Views/log_in_view.dart';
+import 'package:store/Featured/Login_register/Views/register_view.dart';
 import 'package:store/Featured/Splash/Views/splash_view.dart';
 import 'package:store/Featured/on_boarding/Views/on_boarding_view.dart';
 import 'package:store/Theme/theme_mode.dart';
@@ -27,6 +29,7 @@ final bool? isDark;
       providers: [
         BlocProvider(create: (context) => SplashCubit()),
         BlocProvider(create: (context) => AppCubit()..changeAppMode(fromShared: isDark)),
+        BlocProvider(create: (context) => LogInCubit(),)
       ],
       child: BlocConsumer<AppCubit, AppState>(
         listener: (context, state) {
@@ -39,6 +42,7 @@ final bool? isDark;
               SplashView.id: (context) => const SplashView(),
               OnBoardingView.id: (context) => const OnBoardingView(),
               LogInView.id: (context) => const LogInView(),
+              RegisterView.id: (context) => const RegisterView(),
             },
             themeMode:  BlocProvider.of<AppCubit>(context).isDark
                     ? ThemeMode.dark
