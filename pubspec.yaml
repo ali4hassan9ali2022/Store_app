@@ -32,7 +32,11 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.0
+  dartz: ^0.10.1
+  dio: ^5.4.0
   hexcolor: ^3.0.1
+  image_picker: ^1.1.2
+  jwt_decoder: ^2.0.1
   shared_preferences: ^2.5.3
   smooth_page_indicator: ^1.2.1
 
