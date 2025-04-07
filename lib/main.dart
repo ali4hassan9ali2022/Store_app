@@ -4,6 +4,7 @@ import 'package:store/Core/Cache/cache_helper.dart';
 import 'package:store/Cubit/App_cubit/app_cubit.dart';
 import 'package:store/Cubit/App_cubit/app_state.dart';
 import 'package:store/Cubit/splash_cubit/splash_cubit.dart';
+import 'package:store/Featured/Login_register/Views/log_in_view.dart';
 import 'package:store/Featured/Splash/Views/splash_view.dart';
 import 'package:store/Featured/on_boarding/Views/on_boarding_view.dart';
 import 'package:store/Theme/theme_mode.dart';
@@ -37,6 +38,7 @@ final bool? isDark;
             routes: {
               SplashView.id: (context) => const SplashView(),
               OnBoardingView.id: (context) => const OnBoardingView(),
+              LogInView.id: (context) => const LogInView(),
             },
             themeMode:  BlocProvider.of<AppCubit>(context).isDark
                     ? ThemeMode.dark

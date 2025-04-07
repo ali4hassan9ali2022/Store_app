@@ -23,4 +23,10 @@ class AppCubit extends Cubit<AppState> {
       });
     }
   }
+
+  bool isLast = false;
+  void lastPageView(int index) {
+    isLast = (index == 2);
+    emit(LastAppStates());
+  }
 }
