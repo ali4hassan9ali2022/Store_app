@@ -10,6 +10,8 @@ class SplashCubit extends Cubit<SplashState> {
     emit(CartPulseSplashState());
     await Future.delayed(const Duration(milliseconds: 800));
     emit(ProductsFlySplashState());
+    await Future.delayed(const Duration(milliseconds: 800));
+    emit(ShowTextSplashState());
     await Future.delayed(const Duration(seconds: 1));
     emit(CompletedSplashState());
   }
