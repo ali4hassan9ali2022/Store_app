@@ -9,8 +9,6 @@ import 'package:store/Cubit/Log_in_cubit/log_in_cubit.dart';
 import 'package:store/Cubit/Log_in_cubit/log_in_state.dart';
 import 'package:store/Featured/Login_register/Views/register_view.dart';
 import 'package:store/Featured/home_layout/Views/home_layout.dart';
-import 'package:store/Helper/helper.dart';
-import 'package:store/Models/log_in_model.dart';
 
 class LogInViewBody extends StatelessWidget {
   const LogInViewBody({super.key});
