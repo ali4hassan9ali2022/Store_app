@@ -5,11 +5,9 @@ import 'package:store/Core/Cache/cache_helper.dart';
 import 'package:store/Cubit/App_cubit/app_cubit.dart';
 import 'package:store/Cubit/App_cubit/app_state.dart';
 import 'package:store/Cubit/splash_cubit/splash_cubit.dart';
-import 'package:store/Featured/Login_register/Views/log_in_view.dart';
-import 'package:store/Featured/Login_register/Views/register_view.dart';
+import 'package:store/Cubit/store_cubit/store_cubit.dart';
 import 'package:store/Featured/Splash/Views/splash_view.dart';
-import 'package:store/Featured/home_layout/Views/home_layout.dart';
-import 'package:store/Featured/on_boarding/Views/on_boarding_view.dart';
+import 'package:store/Helper/helper.dart';
 import 'package:store/Theme/theme_mode.dart';
 import 'package:store/simple_bloc_opserver.dart';
 
@@ -47,7 +45,7 @@ class StoreApp extends StatelessWidget {
         BlocProvider(
           create: (context) => AppCubit()..changeAppMode(fromShared: isDark),
         ),
-        // BlocProvider(create: (context) => LogInCubit(),)
+        BlocProvider(create: (context) => StoreCubit(),)
       ],
       child: BlocConsumer<AppCubit, AppState>(
         listener: (context, state) {
@@ -56,13 +54,7 @@ class StoreApp extends StatelessWidget {
         builder: (context, state) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            routes: {
-              SplashView.id: (context) =>const SplashView(),
-              OnBoardingView.id: (context) => const OnBoardingView(),
-              LogInView.id: (context) => const LogInView(),
-              RegisterView.id: (context) => const RegisterView(),
-              HomeLayout.id: (context) => const HomeLayout(),
-            },
+            routes: Helper.routes,
             themeMode: ThemeMode.light,
             theme: lightMode(),
             darkTheme: darkTheme(),
