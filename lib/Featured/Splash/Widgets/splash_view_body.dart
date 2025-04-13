@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:store/Core/Controllers/Navigato_to.dart';
 import 'package:store/Cubit/splash_cubit/splash_cubit.dart';
 import 'package:store/Cubit/splash_cubit/splash_state.dart';
 import 'package:store/Featured/Login_register/Views/log_in_view.dart';
 import 'package:store/Featured/Splash/Widgets/custom_icons.dart';
+import 'package:store/Featured/home_layout/Views/home_layout.dart';
 import 'package:store/Featured/on_boarding/Views/on_boarding_view.dart';
 
+
 class SplashViewBody extends StatelessWidget {
-  const SplashViewBody({super.key, required this.isBoarding});
-  final bool isBoarding;
+ const SplashViewBody({super.key});
   @override
   Widget build(BuildContext context) {
     final cubit = BlocProvider.of<SplashCubit>(context);
     cubit.startSplash();
     return BlocConsumer<SplashCubit, SplashState>(
       listener: (context, state) {
-        if (state is CompletedSplashState) {
-         isBoarding ? Navigator.of(context).pushReplacementNamed(LogInView.id) : Navigator.of(context).pushReplacementNamed(OnBoardingView.id);
+        if(state is NavigateToOnBoadingSplashState) {
+          NavigatoTo.pushNamedAndRemoveTo(context, OnBoardingView.id);
+        } else if (state is NavigateToLgonNiSplashState) {
+          NavigatoTo.pushNamedAndRemoveTo(context, LogInView.id);
+        } else if (state is NavigateToHomeLayOutSplashState) {
+          NavigatoTo.pushNamedAndRemoveTo(context, HomeLayout.id);
         }
       },
       builder: (context, state) {
@@ -82,10 +89,7 @@ class SplashViewBody extends StatelessWidget {
         } else if (state is ShowTextSplashState) {
           content = const CustomIcons();
           text = TweenAnimationBuilder<Color?>(
-            tween: ColorTween(
-              begin: Colors.blueAccent,
-              end: Colors.black,
-            ),
+            tween: ColorTween(begin: Colors.blueAccent, end: Colors.black),
             duration: const Duration(milliseconds: 600),
             builder: (context, value, child) {
               return Column(

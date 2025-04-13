@@ -1,53 +1,52 @@
-class LogInModel {
-  final bool status;
-  final String message;
-  final UserData? userData;
+class LoginModel {
+  bool? status;
+  String? message;
+  UserData? data;
 
-  LogInModel({
-    required this.status,
-    required this.message,
-    required this.userData,
+  LoginModel({
+    this.status,
+    this.message,
+    this.data,
   });
-  factory LogInModel.fromJson(jsonData) {
-    return LogInModel(
-      status: jsonData['status'],
-      message: jsonData['message'],
-      userData: jsonData['data'] != null ? UserData.fromJson(jsonData['data']) : null,
-    );
+
+  LoginModel.fromjson(Map<String, dynamic> json) {
+    status = json['status'];
+    message = json['message'];
+    data = json['data'] != null ? UserData.fromJson(json['data']) : null;
   }
 }
 
 class UserData {
-  final int? id;
-  final String? name;
-  final String? email;
-  final String? phone;
-  final String? image;
-  final int? points;
-  final int? credit;
-  final String? token;
+  int? id;
+  String? name;
+  String? email;
+  String? phone;
+  String? image;
+  int? points;
+  int? credit;
+  String? token;
 
   UserData({
-    required this.id,
-    required this.name,
-    required this.email,
-    required this.phone,
-    required this.image,
-    required this.points,
-    required this.credit,
-    required this.token,
+    this.id,
+    this.name,
+    this.email,
+    this.phone,
+    this.image,
+    this.points,
+    this.credit,
+    this.token,
   });
-  factory UserData.fromJson(json) {
-    return UserData(
-      id: json['id'],
-      name: json['name'],
-      email: json['email'],
-      phone: json['phone'],
-      image: json['image'],
-      points: json['points'],
-      credit: json['credit'],
-      token: json['token'],
-    );
+
+  //named constructor
+  UserData.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    email = json['email'];
+    phone = json['phone'];
+    image = json['image'];
+    points = json['points'];
+    credit = json['credit'];
+    token = json['token'];
   }
 }
 

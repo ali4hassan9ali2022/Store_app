@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store/Core/Cache/cache_helper.dart';
 import 'package:store/Cubit/splash_cubit/splash_state.dart';
 
 class SplashCubit extends Cubit<SplashState> {
@@ -14,5 +15,15 @@ class SplashCubit extends Cubit<SplashState> {
     emit(ShowTextSplashState());
     await Future.delayed(const Duration(seconds: 1));
     emit(CompletedSplashState());
+
+    final bool? onBoarding = CacheHelper.getData(key: 'onBoarding');
+    final String? token = CacheHelper.getData(key: 'token') ?? "";
+    if(onBoarding == null) {
+      emit(NavigateToOnBoadingSplashState());
+    } else if (token == null || token.isEmpty) {
+      emit(NavigateToLgonNiSplashState());
+    }  else {
+      emit(NavigateToHomeLayOutSplashState());
+    }
   }
 }

@@ -8,8 +8,17 @@ abstract class Helper {
   static void submit(BuildContext context) {
     CacheHelper.saveDate(key: "onBoarding", value: true).then((value) {
       if (value) {
-        NavigatoTo.pushNamedAndRemoveTo(context, LogInView.id);
+      NavigatoTo.pushNamedAndRemoveTo(context, LogInView.id);
       }
     });
+  }
+
+  static void scaffoldMessenger(
+    BuildContext context,
+    Widget child,
+  ) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      
+      SnackBar(content: child),);
   }
 }

@@ -5,3 +5,6 @@ class CartPulseSplashState extends SplashState{}
 class ProductsFlySplashState extends SplashState{}
 class ShowTextSplashState extends SplashState{}
 class CompletedSplashState extends SplashState{}
+class NavigateToOnBoadingSplashState extends SplashState{}
+class NavigateToLgonNiSplashState extends SplashState{}
+class NavigateToHomeLayOutSplashState extends SplashState{}

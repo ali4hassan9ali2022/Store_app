@@ -1,12 +1,16 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store/Core/Cache/cache_helper.dart';
 import 'package:store/Core/Controllers/Navigato_to.dart';
 import 'package:store/Core/Widgets/custom_button.dart';
 import 'package:store/Core/Widgets/custom_text_field.dart';
 import 'package:store/Cubit/Log_in_cubit/log_in_cubit.dart';
 import 'package:store/Cubit/Log_in_cubit/log_in_state.dart';
 import 'package:store/Featured/Login_register/Views/register_view.dart';
+import 'package:store/Featured/home_layout/Views/home_layout.dart';
+import 'package:store/Helper/helper.dart';
+import 'package:store/Models/log_in_model.dart';
 
 class LogInViewBody extends StatelessWidget {
   const LogInViewBody({super.key});
@@ -17,9 +21,31 @@ class LogInViewBody extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        child: BlocConsumer<LogInCubit, LogInState>(
+        child: BlocConsumer<LogInCubit, LoginStates>(
           listener: (context, state) {
-            // TODO: implement listener
+            if (state is ShopLoginSucssesStates) {
+              if (state.loginModel!.status!) {
+                print("${state.loginModel!.message}");
+                CacheHelper.saveDate(
+                  key: "token",
+                  value: state.loginModel?.data?.token,
+                ).then((value) {
+                  NavigatoTo.pushNamedAndRemoveTo(context, HomeLayout.id);
+                });
+              } else {
+                print("${state.loginModel!.message}");
+                // Helper.scaffoldMessenger(
+                //   context,
+                //   const Text(
+                //     "Error",
+                //     style: TextStyle(
+                //       backgroundColor: Colors.blueAccent,
+                //       color: Colors.white,
+                //     ),
+                //   ),
+                // );
+              }
+            }
           },
           builder: (context, state) {
             return Form(
@@ -85,14 +111,14 @@ class LogInViewBody extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: ConditionalBuilder(
-                          condition: state is! LoadingLogInState,
+                          condition: state is! ShopLoginLoadingStates,
                           builder:
                               (context) => CustomButton(
                                 onPressed: () {
                                   if (cubit.formKey.currentState!.validate()) {
                                     cubit.userLogin(
                                       email: cubit.emailController.text,
-                                      passward: cubit.passwardController.text,
+                                      password: cubit.passwardController.text,
                                     );
                                   }
                                 },
