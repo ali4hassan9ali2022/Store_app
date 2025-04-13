@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/Cubit/splash_cubit/splash_cubit.dart';
 import 'package:store/Cubit/splash_cubit/splash_state.dart';
+import 'package:store/Featured/Login_register/Views/log_in_view.dart';
 import 'package:store/Featured/Splash/Widgets/custom_icons.dart';
 import 'package:store/Featured/on_boarding/Views/on_boarding_view.dart';
 
 class SplashViewBody extends StatelessWidget {
-  const SplashViewBody({super.key});
-
+  const SplashViewBody({super.key, required this.isBoarding});
+  final bool isBoarding;
   @override
   Widget build(BuildContext context) {
     final cubit = BlocProvider.of<SplashCubit>(context);
@@ -15,7 +16,7 @@ class SplashViewBody extends StatelessWidget {
     return BlocConsumer<SplashCubit, SplashState>(
       listener: (context, state) {
         if (state is CompletedSplashState) {
-          Navigator.of(context).pushReplacementNamed(OnBoardingView.id);
+         isBoarding ? Navigator.of(context).pushReplacementNamed(LogInView.id) : Navigator.of(context).pushReplacementNamed(OnBoardingView.id);
         }
       },
       builder: (context, state) {

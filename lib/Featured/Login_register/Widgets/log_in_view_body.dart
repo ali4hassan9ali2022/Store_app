@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/Core/Controllers/Navigato_to.dart';
@@ -83,7 +84,25 @@ class LogInViewBody extends StatelessWidget {
                       const SizedBox(height: 15),
                       SizedBox(
                         width: double.infinity,
-                        child: CustomButton(onPressed: () {}, text: "Login"),
+                        child: ConditionalBuilder(
+                          condition: state is! LoadingLogInState,
+                          builder:
+                              (context) => CustomButton(
+                                onPressed: () {
+                                  if (cubit.formKey.currentState!.validate()) {
+                                    cubit.userLogin(
+                                      email: cubit.emailController.text,
+                                      passward: cubit.passwardController.text,
+                                    );
+                                  }
+                                },
+                                text: "Login",
+                              ),
+                          fallback:
+                              (context) => const Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
