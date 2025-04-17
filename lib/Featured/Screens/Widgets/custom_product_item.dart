@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:store/Featured/Screens/Widgets/custom_categories_item.dart';
 import 'package:store/Featured/Screens/Widgets/custom_grid_view.dart';
 import 'package:store/Featured/Screens/Widgets/custom_slider_carousel.dart';
+import 'package:store/Featured/Screens/Widgets/custom_text_title.dart';
 import 'package:store/Models/home_model.dart';
 
 class CustomPeoductItem extends StatelessWidget {
@@ -16,15 +17,24 @@ class CustomPeoductItem extends StatelessWidget {
         children: [
           CustomSliderCarousel(homeModel: homeModel),
           const SizedBox(height: 15),
-          const Text(
-            "Categories",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: CustomTextTitle(title: "Categories"),
           ),
-         const CustomCategoriesItem(),
           const SizedBox(height: 8),
-          const Text(
-            "New Product",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
+          SizedBox(
+            height: 100,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) => const CustomCategoriesItem(),
+              separatorBuilder: (context, index) => const SizedBox(width: 10),
+              itemCount: 10,
+            ),
+          ),
+          const SizedBox(height: 15),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: CustomTextTitle(title: "New Product"),
           ),
           const SizedBox(height: 15),
           CustomGridView(homeModel: homeModel),
