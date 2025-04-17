@@ -3,15 +3,16 @@ import 'package:dio/dio.dart';
 class DioHelper {
   static Dio dio = Dio(
     BaseOptions(
-        baseUrl: 'https://student.valuxapps.com/api/',
-        receiveDataWhenStatusError: true,
-        headers: {'Content-Type': 'application/json', 'lang': 'en'}),
+      baseUrl: 'https://student.valuxapps.com/api/',
+      receiveDataWhenStatusError: true,
+      headers: {'Content-Type': 'application/json', 'lang': 'ar'},
+    ),
   );
 
   static Future<Response> getData({
     required path,
     Map<String, dynamic>? query,
-    String lang = 'en',
+    String lang = 'ar',
     String token = '',
   }) async {
     dio.options.headers = {
@@ -24,7 +25,7 @@ class DioHelper {
 
   static Future<Response> postData({
     required String url,
-    String lang = 'en',
+    String lang = 'ar',
     String token = '',
     Map<String, dynamic>? query,
     required Map<String, dynamic> data,
@@ -35,16 +36,12 @@ class DioHelper {
       'Content-Type': 'application/json',
     };
 
-    return dio.post(
-      url,
-      queryParameters: query,
-      data: data,
-    );
+    return dio.post(url, queryParameters: query, data: data);
   }
 
   static Future<Response> putData({
     required String url,
-    String lang = 'en',
+    String lang = 'ar',
     String token = '',
     Map<String, dynamic>? query,
     required Map<String, dynamic> data,
@@ -55,10 +52,6 @@ class DioHelper {
       'Content-Type': 'application/json',
     };
 
-    return dio.put(
-      url,
-      queryParameters: query,
-      data: data,
-    );
+    return dio.put(url, queryParameters: query, data: data);
   }
 }

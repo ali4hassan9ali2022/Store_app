@@ -11,3 +11,10 @@ class FailureStoreState extends StoreState{
 
   FailureStoreState({required this.errMessage});
 }
+class LoadingCategorieesStoreState extends StoreState{}
+class SuccessCategorieesStoreState extends StoreState{}
+class FailureCategorieesStoreState extends StoreState{
+  final String errMessage;
+
+  FailureCategorieesStoreState({required this.errMessage});
+}
