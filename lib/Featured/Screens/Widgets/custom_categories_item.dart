@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:store/Models/categories_mode.dart';
 
 class CustomCategoriesItem extends StatelessWidget {
-  const CustomCategoriesItem({super.key});
-
+  const CustomCategoriesItem({super.key, required this.dataModel});
+final DataModel dataModel;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -12,9 +13,9 @@ class CustomCategoriesItem extends StatelessWidget {
         child: Stack(
           alignment: AlignmentDirectional.bottomCenter,
           children: [
-            const Image(
+             Image(
               image: NetworkImage(
-                "https://student.valuxapps.com/storage/uploads/banners/1732402018qoY0L.banner1.png",
+                dataModel.image ?? "",
               ),
               height: 100,
               width: 200,
@@ -23,9 +24,9 @@ class CustomCategoriesItem extends StatelessWidget {
             Container(
               width: 200,
               color: Colors.black.withOpacity(0.8),
-              child: const Text(
-                "Laptop",
-                style: TextStyle(color: Colors.white),
+              child:  Text(
+                dataModel.name ?? "",
+                style: const TextStyle(color: Colors.white),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,

@@ -1,8 +1,8 @@
-class CategoriesMode {
+class CategoriesModel {
   bool? status;
   CategoriesDataModel? data;
 
-  CategoriesMode.fromJson(Map<String, dynamic>? json) {
+  CategoriesModel.fromJson(Map<String, dynamic>? json) {
     status = json?['status'];
     data = json != null ? CategoriesDataModel.fromJson(json['data']) : null;
   }

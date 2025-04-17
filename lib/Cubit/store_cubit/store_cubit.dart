@@ -8,6 +8,7 @@ import 'package:store/Featured/Screens/Views/favourite_screen.dart';
 import 'package:store/Featured/Screens/Views/products_screen.dart';
 import 'package:store/Featured/Screens/Views/setting_screen.dart';
 import 'package:store/Helper/helper.dart';
+import 'package:store/Models/categories_mode.dart';
 import 'package:store/Models/home_model.dart';
 
 class StoreCubit extends Cubit<StoreState> {
@@ -47,6 +48,20 @@ HomeModel? homeModel;
       emit(SuccessStoreState());
     },).catchError((error) {
       emit(FailureStoreState(
+        errMessage: error
+      ));
+    });
+  }
+CategoriesModel? categoriesModel;
+  void getCategories() {
+    DioHelper.getData(path: gETCATEGORIES,
+    token: Helper.token
+
+    ).then((value) {
+      categoriesModel = CategoriesModel.fromJson(value.data);
+      emit(SuccessCategorieesStoreState());
+    },).catchError((error) {
+      emit(FailureCategorieesStoreState(
         errMessage: error
       ));
     });
