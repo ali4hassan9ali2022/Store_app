@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/Core/Cache/cache_helper.dart';
 import 'package:store/Cubit/splash_cubit/splash_state.dart';
+import 'package:store/Helper/helper.dart';
 
 class SplashCubit extends Cubit<SplashState> {
   SplashCubit() : super(InitialSplashState());
@@ -17,12 +18,12 @@ class SplashCubit extends Cubit<SplashState> {
     emit(CompletedSplashState());
 
     final bool? onBoarding = CacheHelper.getData(key: 'onBoarding');
-    final String? token = CacheHelper.getData(key: 'token') ?? "";
-    if(onBoarding == null) {
+    Helper.token = CacheHelper.getData(key: 'token') ?? "";
+    if (onBoarding == null) {
       emit(NavigateToOnBoadingSplashState());
-    } else if (token == null || token.isEmpty) {
+    } else if (Helper.token.isEmpty) {
       emit(NavigateToLgonNiSplashState());
-    }  else {
+    } else {
       emit(NavigateToHomeLayOutSplashState());
     }
   }

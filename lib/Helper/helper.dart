@@ -26,4 +26,6 @@ abstract class Helper {
     HomeLayout.id: (context) => const HomeLayout(),
     SearchView.id: (context) => const SearchView(),
   };
+
+  static String token = "";
 }

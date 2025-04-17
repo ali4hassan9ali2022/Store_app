@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store/Core/Api/cache_dio.dart';
+import 'package:store/Core/Api/end_ponits.dart';
 import 'package:store/Cubit/store_cubit/store_state.dart';
 import 'package:store/Featured/Screens/Views/categories_screen.dart';
 import 'package:store/Featured/Screens/Views/favourite_screen.dart';
 import 'package:store/Featured/Screens/Views/products_screen.dart';
 import 'package:store/Featured/Screens/Views/setting_screen.dart';
+import 'package:store/Helper/helper.dart';
+import 'package:store/Models/home_model.dart';
 
 class StoreCubit extends Cubit<StoreState> {
   StoreCubit() : super(InitialStoreState());
@@ -30,5 +34,21 @@ class StoreCubit extends Cubit<StoreState> {
   void changeBottomNavBar(int index) {
     currentIndex = index;
     emit(ChangeBottomNavStoreState());
+  }
+HomeModel? homeModel;
+  void getData() {
+    emit(LoadingStoreState());
+    DioHelper.getData(path: hOME,
+    token: Helper.token
+
+    ).then((value) {
+      homeModel = HomeModel.fromjson(value.data);
+      print(homeModel!.data!.banners?[0].image);
+      emit(SuccessStoreState());
+    },).catchError((error) {
+      emit(FailureStoreState(
+        errMessage: error
+      ));
+    });
   }
 }
