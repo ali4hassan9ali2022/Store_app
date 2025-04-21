@@ -39,21 +39,21 @@ class BannerModel {
 class ProductModel {
   int? id;
   dynamic price;
-  dynamic old_price;
+  dynamic oldPrice;
   dynamic discount;
   String? image;
   String? name;
-  bool? in_favourites;
-  bool? in_cart;
+  bool? inFavourites;
+  bool? inCart;
 
   ProductModel.fromjson(Map<String, dynamic> json) {
     id = json['id'];
     price = json['price'];
-    old_price = json['old_price'];
+    oldPrice = json['old_price'];
     discount = json['discount'];
     image = json['image'];
     name = json['name'];
-    in_favourites = json['in_favourites'];
-    in_cart = json['in_cart'];
+    inFavourites = json['in_favourites'];
+    inCart = json['in_cart'];
   }
 }

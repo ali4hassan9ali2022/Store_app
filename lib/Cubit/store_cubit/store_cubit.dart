@@ -36,46 +36,53 @@ class StoreCubit extends Cubit<StoreState> {
     currentIndex = index;
     emit(ChangeBottomNavStoreState());
   }
-HomeModel? homeModel;
-Map<int, bool?> favorites = {};
+
+  HomeModel? homeModel;
+  Map<int, bool?> favorites = {};
   void getData() {
     emit(LoadingStoreState());
-    DioHelper.getData(path: hOME,
-    token: Helper.token
-
-    ).then((value) {
-      homeModel = HomeModel.fromjson(value.data);
-      print(homeModel!.data!.banners?[0].image);
-      homeModel!.data!.products!.forEach((element) {
-        favorites.addAll({
-          element.id! : element.in_favourites,
+    DioHelper.getData(path: hOME, token: Helper.token)
+        .then((value) {
+          homeModel = HomeModel.fromjson(value.data);
+          print(homeModel!.data!.banners?[0].image);
+          for (var element in homeModel!.data!.products!) {
+             if (element.inFavourites != null) {
+          favorites[element.id!] = element.inFavourites!;
+        } else {
+          // Initialize with default value if in_favourites is null
+          favorites[element.id!] = false;
+        }
+          }
+          emit(SuccessStoreState());
+        })
+        .catchError((error) {
+          emit(FailureStoreState(errMessage: error));
         });
-      },);
-      emit(SuccessStoreState());
-    },).catchError((error) {
-      emit(FailureStoreState(
-        errMessage: error
-      ));
-    });
   }
-CategoriesModel? categoriesModel;
+
+  CategoriesModel? categoriesModel;
   void getCategories() {
-    DioHelper.getData(path: gETCATEGORIES,
-    token: Helper.token
-
-    ).then((value) {
-      categoriesModel = CategoriesModel.fromJson(value.data);
-      emit(SuccessCategorieesStoreState());
-    },).catchError((error) {
-      emit(FailureCategorieesStoreState(
-        errMessage: error
-      ));
-    });
+    DioHelper.getData(path: gETCATEGORIES, token: Helper.token)
+        .then((value) {
+          categoriesModel = CategoriesModel.fromJson(value.data);
+          emit(SuccessCategorieesStoreState());
+        })
+        .catchError((error) {
+          emit(FailureCategorieesStoreState(errMessage: error));
+        });
   }
 
-  void changeproduct_id(int prodcutId) {
-    DioHelper.postData(url: gETFAVOURITE, data: {
-      "product_id" : prodcutId
-    }, token: Helper.token);
+  void changeFavorites(int prodcutId) {
+    DioHelper.postData(
+          url: gETFAVOURITE,
+          data: {"product_id": prodcutId},
+          token: Helper.token,
+        )
+        .then((value) {
+          emit(SuccessChangeFavoritesStoreState());
+        })
+        .catchError((error) {
+          emit(FailureChangeFavoritesStoreState(errMessage: error));
+        });
   }
 }

@@ -59,7 +59,7 @@ class ProductItem extends StatelessWidget {
                     const SizedBox(width: 10),
                     if (productModel.price != 0)
                       Text(
-                        "${productModel.old_price} "
+                        "${productModel.oldPrice} "
                         r"$",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -77,7 +77,7 @@ class ProductItem extends StatelessWidget {
                         size: 14,
 
                         color:
-                            cubit.favorites[productModel.id] == true
+                            cubit.favorites[productModel.id]!
                                 ? Colors.red
                                 : Colors.grey,
                       ),
