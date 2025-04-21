@@ -22,15 +22,12 @@ class LogInCubit extends Cubit<LoginStates> {
     emit(ChangePassworsVisibailitystate());
   }
 
- void userLogin({required String email, required String password}) async {
+  void userLogin({required String email, required String password}) async {
     emit(ShopLoginLoadingStates());
     try {
       final response = await DioHelper.postData(
         url: lOGIN,
-        data: {
-          'email': email,
-          'password': password,
-        },
+        data: {'email': email, 'password': password},
       );
       logInModel = LoginModel.fromjson(response.data);
       // print(LoginModel.data.token);
@@ -39,13 +36,17 @@ class LogInCubit extends Cubit<LoginStates> {
       if (logInModel.status!) {
         emit(ShopLoginSucssesStates(logInModel));
       } else {
-        emit(ShopLoginSErrorStates(
-            logInModel.message ?? 'Unknown error occurred'));
+        emit(
+          ShopLoginSErrorStates(logInModel.message ?? 'Unknown error occurred'),
+        );
       }
     } catch (error) {
       print(error.toString());
-      emit(ShopLoginSErrorStates(
-          'Failed to authenticate. Please try again later.'));
+      emit(
+        ShopLoginSErrorStates(
+          'Failed to authenticate. Please try again later.',
+        ),
+      );
     }
   }
 }

@@ -37,6 +37,7 @@ class StoreCubit extends Cubit<StoreState> {
     emit(ChangeBottomNavStoreState());
   }
 HomeModel? homeModel;
+Map<int, bool?> favorites = {};
   void getData() {
     emit(LoadingStoreState());
     DioHelper.getData(path: hOME,
@@ -45,6 +46,11 @@ HomeModel? homeModel;
     ).then((value) {
       homeModel = HomeModel.fromjson(value.data);
       print(homeModel!.data!.banners?[0].image);
+      homeModel!.data!.products!.forEach((element) {
+        favorites.addAll({
+          element.id! : element.in_favourites,
+        });
+      },);
       emit(SuccessStoreState());
     },).catchError((error) {
       emit(FailureStoreState(
@@ -65,5 +71,11 @@ CategoriesModel? categoriesModel;
         errMessage: error
       ));
     });
+  }
+
+  void changeproduct_id(int prodcutId) {
+    DioHelper.postData(url: gETFAVOURITE, data: {
+      "product_id" : prodcutId
+    }, token: Helper.token);
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store/Cubit/store_cubit/store_cubit.dart';
 import 'package:store/Models/home_model.dart';
 
 class ProductItem extends StatelessWidget {
@@ -6,6 +8,7 @@ class ProductItem extends StatelessWidget {
   final ProductModel productModel;
   @override
   Widget build(BuildContext context) {
+    var cubit = BlocProvider.of<StoreCubit>(context);
     return Container(
       color: Colors.white,
       child: Column(
@@ -69,7 +72,15 @@ class ProductItem extends StatelessWidget {
                     const Expanded(child: SizedBox()),
                     IconButton(
                       onPressed: () {},
-                      icon: const Icon(Icons.favorite_outline, size: 14),
+                      icon: Icon(
+                        Icons.favorite_outline,
+                        size: 14,
+
+                        color:
+                            cubit.favorites[productModel.id] == true
+                                ? Colors.red
+                                : Colors.grey,
+                      ),
                     ),
                   ],
                 ),

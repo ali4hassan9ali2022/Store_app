@@ -18,3 +18,10 @@ class FailureCategorieesStoreState extends StoreState{
 
   FailureCategorieesStoreState({required this.errMessage});
 }
+
+class SuccessChangeFavoritesStoreState extends StoreState{}
+class FailureChangeFavoritesStoreState extends StoreState{
+  final String errMessage;
+
+  FailureChangeFavoritesStoreState({required this.errMessage});
+}
