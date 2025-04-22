@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:store/Models/categories_mode.dart';
 
@@ -8,12 +9,23 @@ class CustomCatItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Image(
-          image: NetworkImage(dataModel.image ?? ""),
+        CachedNetworkImage(
+          imageUrl: dataModel.image!,
+
+          placeholder:
+              (context, url) =>
+                  const Center(child: CircularProgressIndicator()),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
+          fit: BoxFit.cover,
           height: 80,
           width: 80,
-          fit: BoxFit.cover,
         ),
+        // Image(
+        //   image: NetworkImage(dataModel.image ?? ""),
+        //   height: 80,
+        //   width: 80,
+        //   fit: BoxFit.cover,
+        // ),
         const SizedBox(width: 20),
         Text(
           dataModel.name ?? "",

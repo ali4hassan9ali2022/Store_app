@@ -10,7 +10,7 @@ class FavouriteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cubit = BlocProvider.of<StoreCubit>(context);
+    // var cubit = BlocProvider.of<StoreCubit>(context);
     return BlocConsumer<StoreCubit, StoreState>(
       listener: (context, state) {
         if (state is SuccessGetFavouriteStoreApp) {
@@ -32,8 +32,7 @@ class FavouriteScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return ConditionalBuilder(
-          condition:
-              cubit.favouritesModel != null && cubit.favouritesModel != null,
+          condition: state is! LoadingGetFavouriteStoreApp,
           builder: (context) {
             return const CustomFavouriteListView();
           },

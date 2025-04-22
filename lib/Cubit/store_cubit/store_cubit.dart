@@ -87,6 +87,8 @@ class StoreCubit extends Cubit<StoreState> {
           changeFavouriteModel = ChangeFavouriteModel.fromJson(value.data);
           if(!changeFavouriteModel!.status!) {
             favorites[prodcutId] = !favorites[prodcutId]!;
+          } else {
+            getFavourite();
           }
           emit(SuccessChangeFavoritesStoreState(
             model: changeFavouriteModel!,
@@ -99,6 +101,7 @@ class StoreCubit extends Cubit<StoreState> {
   }
   FavouritesModel? favouritesModel;
   void getFavourite() {
+    emit(LoadingGetFavouriteStoreApp());
     DioHelper.getData(path: gETFAVOURITE, token: Helper.token)
         .then((value) {
           favouritesModel = FavouritesModel.fromJson(value.data);
