@@ -1,4 +1,5 @@
 import 'package:store/Models/changeFavouriteModel.dart';
+import 'package:store/Models/favouriteModel.dart';
 
 abstract class StoreState {
 
@@ -33,7 +34,12 @@ class FailureChangeFavoritesStoreState extends StoreState{
   FailureChangeFavoritesStoreState({required this.errMessage});
 }
 
-class SuccessGetFavouriteStoreApp extends StoreState{}
+class LoadingGetFavouriteStoreApp extends StoreState{}
+class SuccessGetFavouriteStoreApp extends StoreState{
+  final FavouritesModel favouritesModel;
+
+  SuccessGetFavouriteStoreApp({required this.favouritesModel});
+}
 class FailureGetFavouriteStoreApp extends StoreState{
   final String errMessage;
 

@@ -102,7 +102,9 @@ class StoreCubit extends Cubit<StoreState> {
     DioHelper.getData(path: gETFAVOURITE, token: Helper.token)
         .then((value) {
           favouritesModel = FavouritesModel.fromJson(value.data);
-          emit(SuccessGetFavouriteStoreApp());
+          emit(SuccessGetFavouriteStoreApp(
+            favouritesModel: favouritesModel!,
+          ));
         })
         .catchError((error) {
           emit(FailureGetFavouriteStoreApp(errMessage: error));

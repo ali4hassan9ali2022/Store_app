@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store/Cubit/store_cubit/store_cubit.dart';
+import 'package:store/Models/favouriteModel.dart';
 
 class CustomFavuriteItem extends StatelessWidget {
-  const CustomFavuriteItem({super.key});
-
+  const CustomFavuriteItem({super.key, required this.favouritesModel});
+  final FavouriteData favouritesModel;
   @override
   Widget build(BuildContext context) {
+    var cubit = BlocProvider.of<StoreCubit>(context);
     return Padding(
       padding: const EdgeInsets.all(20),
       child: SizedBox(
@@ -14,16 +18,14 @@ class CustomFavuriteItem extends StatelessWidget {
             Stack(
               alignment: AlignmentDirectional.bottomStart,
               children: [
-                const Image(
-                  image: NetworkImage(
-                    "https://student.valuxapps.com/storage/uploads/banners/1732402018qoY0L.banner1.png",
-                  ),
+                Image(
+                  image: NetworkImage(favouritesModel.product!.image!),
 
                   width: 120,
                   fit: BoxFit.cover,
                   height: 120,
                 ),
-                if (1 != 0)
+                if (favouritesModel.product!.discount != 0)
                   Container(
                     color: Colors.red,
                     padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -39,35 +41,34 @@ class CustomFavuriteItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     // productModel.name.toString(),
-                    "Ali",
+                    favouritesModel.product!.name.toString(),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 14, height: 1.3),
+                    style: const TextStyle(fontSize: 14, height: 1.3),
                   ),
                   const Spacer(),
                   Row(
                     children: [
-                      const Text(
-                        "50"
-                        // "${productModel.price} "
+                      Text(
+                        "${favouritesModel.product!.price}"
                         r"$",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 12,
                           color: Colors.blueAccent,
                         ),
                       ),
                       const SizedBox(width: 10),
-                      if (1 != 0)
-                        const Text(
-                          "50"
+                      if (favouritesModel.product!.discount != 0)
+                        Text(
+                          "${favouritesModel.product!.oldPrice}"
                           r"$",
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 10,
                             color: Colors.red,
                             decoration: TextDecoration.lineThrough,
@@ -76,19 +77,18 @@ class CustomFavuriteItem extends StatelessWidget {
                       const Expanded(child: SizedBox()),
                       IconButton(
                         onPressed: () {
-                          // cubit.changeFavorites(productModel.id!);
+                          cubit.changeFavorites(favouritesModel.product!.id!);
                           // print(productModel.id.toString());
                         },
-                        icon: const Icon(
-                          Icons.favorite,
-                          // cubit.favorites[productModel.id]!
-                          //     ? Icons.favorite
-                          //     : Icons.favorite_outline,
-                          // size: 14,
-                          // color:
-                          //     cubit.favorites[productModel.id]!
-                          //         ? Colors.red
-                          //         : Colors.grey,
+                        icon: Icon(
+                          cubit.favorites[favouritesModel.product!.id]!
+                              ? Icons.favorite
+                              : Icons.favorite_outline,
+                          size: 14,
+                          color:
+                              cubit.favorites[favouritesModel.product!.id]!
+                                  ? Colors.red
+                                  : Colors.grey,
                         ),
                       ),
                     ],

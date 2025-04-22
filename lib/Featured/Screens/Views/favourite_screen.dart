@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/Cubit/store_cubit/store_cubit.dart';
 import 'package:store/Cubit/store_cubit/store_state.dart';
-import 'package:store/Featured/Screens/Widgets/custom_favourite_item.dart';
 import 'package:store/Featured/Screens/Widgets/custom_favourite_list_view.dart';
 
 class FavouriteScreen extends StatelessWidget {
@@ -14,8 +13,8 @@ class FavouriteScreen extends StatelessWidget {
     var cubit = BlocProvider.of<StoreCubit>(context);
     return BlocConsumer<StoreCubit, StoreState>(
       listener: (context, state) {
-        if (state is SuccessChangeFavoritesStoreState) {
-          if (!state.model.status!) {
+        if (state is SuccessGetFavouriteStoreApp) {
+          if (!state.favouritesModel.status!) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 backgroundColor: Colors.deepOrange,
@@ -23,7 +22,9 @@ class FavouriteScreen extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                content: Center(child: Text(state.model.message.toString())),
+                content: Center(
+                  child: Text(state.favouritesModel.message.toString()),
+                ),
               ),
             );
           }
@@ -31,7 +32,8 @@ class FavouriteScreen extends StatelessWidget {
       },
       builder: (context, state) {
         return ConditionalBuilder(
-          condition: cubit.homeModel != null && cubit.categoriesModel != null,
+          condition:
+              cubit.favouritesModel != null && cubit.favouritesModel != null,
           builder: (context) {
             return const CustomFavouriteListView();
           },
