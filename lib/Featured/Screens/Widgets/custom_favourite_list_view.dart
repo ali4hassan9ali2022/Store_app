@@ -7,15 +7,12 @@ class CustomFavouriteListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-        physics: const BouncingScrollPhysics(),
-        itemBuilder:
-            (context, index) => const CustomFavuriteItem(
-              
-            ),
-        separatorBuilder:
-            (context, index) =>
-                const Divider(color: Colors.grey, thickness: 1, height: 50),
-        itemCount: 10,
-      );
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, index) => const CustomFavuriteItem(),
+      separatorBuilder:
+          (context, index) =>
+              const Divider(color: Colors.grey, thickness: 0, height: 30),
+      itemCount: 10,
+    );
   }
 }

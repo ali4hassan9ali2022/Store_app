@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomFavuriteItem extends StatelessWidget {
-  const CustomFavuriteItem({
-    super.key,
-  });
+  const CustomFavuriteItem({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +18,7 @@ class CustomFavuriteItem extends StatelessWidget {
                   image: NetworkImage(
                     "https://student.valuxapps.com/storage/uploads/banners/1732402018qoY0L.banner1.png",
                   ),
-    
+
                   width: 120,
                   fit: BoxFit.cover,
                   height: 120,
@@ -48,6 +46,7 @@ class CustomFavuriteItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 14, height: 1.3),
                   ),
+                  const Spacer(),
                   Row(
                     children: [
                       const Text(

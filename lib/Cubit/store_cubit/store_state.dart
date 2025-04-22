@@ -32,3 +32,10 @@ class FailureChangeFavoritesStoreState extends StoreState{
 
   FailureChangeFavoritesStoreState({required this.errMessage});
 }
+
+class SuccessGetFavouriteStoreApp extends StoreState{}
+class FailureGetFavouriteStoreApp extends StoreState{
+  final String errMessage;
+
+  FailureGetFavouriteStoreApp({required this.errMessage});
+}
