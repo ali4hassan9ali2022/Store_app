@@ -10,6 +10,7 @@ import 'package:store/Featured/Screens/Views/setting_screen.dart';
 import 'package:store/Helper/helper.dart';
 import 'package:store/Models/categories_mode.dart';
 import 'package:store/Models/changeFavouriteModel.dart';
+import 'package:store/Models/favouriteModel.dart';
 import 'package:store/Models/home_model.dart';
 
 class StoreCubit extends Cubit<StoreState> {
@@ -94,6 +95,17 @@ class StoreCubit extends Cubit<StoreState> {
         .catchError((error) {
           favorites[prodcutId] = !favorites[prodcutId]!;
           emit(FailureChangeFavoritesStoreState(errMessage: error));
+        });
+  }
+  FavouritesModel? favouritesModel;
+  void getFavourite() {
+    DioHelper.getData(path: gETFAVOURITE, token: Helper.token)
+        .then((value) {
+          favouritesModel = FavouritesModel.fromJson(value.data);
+          emit(SuccessGetFavouriteStoreApp());
+        })
+        .catchError((error) {
+          emit(FailureGetFavouriteStoreApp(errMessage: error));
         });
   }
 }
