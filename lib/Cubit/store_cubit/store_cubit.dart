@@ -9,6 +9,7 @@ import 'package:store/Featured/Screens/Views/products_screen.dart';
 import 'package:store/Featured/Screens/Views/setting_screen.dart';
 import 'package:store/Helper/helper.dart';
 import 'package:store/Models/categories_mode.dart';
+import 'package:store/Models/changeFavouriteModel.dart';
 import 'package:store/Models/home_model.dart';
 
 class StoreCubit extends Cubit<StoreState> {
@@ -46,12 +47,12 @@ class StoreCubit extends Cubit<StoreState> {
           homeModel = HomeModel.fromjson(value.data);
           print(homeModel!.data!.banners?[0].image);
           for (var element in homeModel!.data!.products!) {
-             if (element.inFavourites != null) {
-          favorites[element.id!] = element.inFavourites!;
-        } else {
-          // Initialize with default value if in_favourites is null
-          favorites[element.id!] = false;
-        }
+            if (element.inFavourites != null) {
+              favorites[element.id!] = element.inFavourites!;
+            } else {
+              // Initialize with default value if in_favourites is null
+              favorites[element.id!] = false;
+            }
           }
           emit(SuccessStoreState());
         })
@@ -72,16 +73,26 @@ class StoreCubit extends Cubit<StoreState> {
         });
   }
 
+  ChangeFavouriteModel? changeFavouriteModel;
   void changeFavorites(int prodcutId) {
+    favorites[prodcutId] = !favorites[prodcutId]!;
+    emit(ChangeFavoritesStoreState());
     DioHelper.postData(
           url: gETFAVOURITE,
-          data: {"product_id": prodcutId},
+          data: {'product_id': prodcutId},
           token: Helper.token,
         )
         .then((value) {
-          emit(SuccessChangeFavoritesStoreState());
+          changeFavouriteModel = ChangeFavouriteModel.fromJson(value.data);
+          if(!changeFavouriteModel!.status!) {
+            favorites[prodcutId] = !favorites[prodcutId]!;
+          }
+          emit(SuccessChangeFavoritesStoreState(
+            model: changeFavouriteModel!,
+          ));
         })
         .catchError((error) {
+          favorites[prodcutId] = !favorites[prodcutId]!;
           emit(FailureChangeFavoritesStoreState(errMessage: error));
         });
   }

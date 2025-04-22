@@ -71,11 +71,15 @@ class ProductItem extends StatelessWidget {
                       ),
                     const Expanded(child: SizedBox()),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        cubit.changeFavorites(productModel.id!);
+                        print(productModel.id.toString());
+                      },
                       icon: Icon(
-                        Icons.favorite_outline,
+                        cubit.favorites[productModel.id]!
+                            ? Icons.favorite
+                            : Icons.favorite_outline,
                         size: 14,
-
                         color:
                             cubit.favorites[productModel.id]!
                                 ? Colors.red

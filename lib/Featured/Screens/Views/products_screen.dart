@@ -12,12 +12,30 @@ class ProductsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var cubit = BlocProvider.of<StoreCubit>(context);
     return BlocConsumer<StoreCubit, StoreState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is SuccessChangeFavoritesStoreState) {
+          if (!state.model.status!) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.deepOrange,
+                
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                content: Center(child: Text(state.model.message.toString())),
+              ),
+            );
+          }
+        }
+      },
       builder: (context, state) {
         return ConditionalBuilder(
           condition: cubit.homeModel != null && cubit.categoriesModel != null,
           builder: (context) {
-            return CustomPeoductItem(homeModel: cubit.homeModel!, categoriesModel: cubit.categoriesModel!,);
+            return CustomPeoductItem(
+              homeModel: cubit.homeModel!,
+              categoriesModel: cubit.categoriesModel!,
+            );
           },
           fallback: (context) {
             return const Center(child: CircularProgressIndicator());
@@ -27,4 +45,3 @@ class ProductsScreen extends StatelessWidget {
     );
   }
 }
-
