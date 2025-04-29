@@ -45,3 +45,14 @@ class FailureGetFavouriteStoreApp extends StoreState{
 
   FailureGetFavouriteStoreApp({required this.errMessage});
 }
+class LoadingGetUserStoreApp extends StoreState{}
+class SuccessGetUserStoreApp extends StoreState{
+  // final FavouritesModel favouritesModel;
+
+  // SuccessGetFavouriteStoreApp({required this.favouritesModel});
+}
+class FailureGetUserStoreApp extends StoreState{
+  final String errMessage;
+
+  FailureGetUserStoreApp({required this.errMessage});
+}

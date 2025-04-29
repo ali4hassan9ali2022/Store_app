@@ -12,6 +12,7 @@ import 'package:store/Models/categories_mode.dart';
 import 'package:store/Models/changeFavouriteModel.dart';
 import 'package:store/Models/favouriteModel.dart';
 import 'package:store/Models/home_model.dart';
+import 'package:store/Models/log_in_model.dart';
 
 class StoreCubit extends Cubit<StoreState> {
   StoreCubit() : super(InitialStoreState());
@@ -112,5 +113,16 @@ class StoreCubit extends Cubit<StoreState> {
         .catchError((error) {
           emit(FailureGetFavouriteStoreApp(errMessage: error));
         });
+  }
+
+  LoginModel? loginModel;
+  void getUserData() {
+    emit(LoadingGetUserStoreApp());
+    DioHelper.getData(path: pROFILE, token: Helper.token).then((value) {
+      loginModel = LoginModel.fromjson(value.data);
+      emit(SuccessGetUserStoreApp());
+    },).catchError((error){
+      emit(FailureGetUserStoreApp(errMessage:error));
+    });
   }
 }

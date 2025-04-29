@@ -45,7 +45,14 @@ class StoreApp extends StatelessWidget {
         BlocProvider(
           create: (context) => AppCubit()..changeAppMode(fromShared: isDark),
         ),
-        BlocProvider(create: (context) => StoreCubit()..getData()..getCategories()..getFavourite(),)
+        BlocProvider(
+          create:
+              (context) =>
+                  StoreCubit()
+                    ..getData()
+                    ..getCategories()
+                    ..getFavourite()..getUserData(),
+        ),
       ],
       child: BlocConsumer<AppCubit, AppState>(
         listener: (context, state) {
