@@ -17,9 +17,11 @@ class CustomButton extends StatelessWidget {
         ), // Text color
         elevation: 10.0, // Elevation
       ),
-      child: Text(
-        text,
-        style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+      child: Center(
+        child: Text(
+          text,
+          style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }

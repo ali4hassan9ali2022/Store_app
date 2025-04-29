@@ -1,5 +1,6 @@
 import 'package:store/Models/changeFavouriteModel.dart';
 import 'package:store/Models/favouriteModel.dart';
+import 'package:store/Models/log_in_model.dart';
 
 abstract class StoreState {
 
@@ -48,6 +49,9 @@ class FailureGetFavouriteStoreApp extends StoreState{
 class LoadingGetUserStoreApp extends StoreState{}
 class SuccessGetUserStoreApp extends StoreState{
   // final FavouritesModel favouritesModel;
+  final LoginModel loginModel;
+
+  SuccessGetUserStoreApp({required this.loginModel});
 
   // SuccessGetFavouriteStoreApp({required this.favouritesModel});
 }

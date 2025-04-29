@@ -17,6 +17,10 @@ import 'package:store/Models/log_in_model.dart';
 class StoreCubit extends Cubit<StoreState> {
   StoreCubit() : super(InitialStoreState());
   int currentIndex = 0;
+  TextEditingController settingsNameController = TextEditingController();
+  TextEditingController settingsEmailController = TextEditingController();
+  TextEditingController settingsPhoneController = TextEditingController();
+  TextEditingController settingsPasswordController = TextEditingController();
   List<Widget> bottomScreens = [
     const ProductsScreen(),
     const CategoriesScreen(),
@@ -86,43 +90,42 @@ class StoreCubit extends Cubit<StoreState> {
         )
         .then((value) {
           changeFavouriteModel = ChangeFavouriteModel.fromJson(value.data);
-          if(!changeFavouriteModel!.status!) {
+          if (!changeFavouriteModel!.status!) {
             favorites[prodcutId] = !favorites[prodcutId]!;
           } else {
             getFavourite();
           }
-          emit(SuccessChangeFavoritesStoreState(
-            model: changeFavouriteModel!,
-          ));
+          emit(SuccessChangeFavoritesStoreState(model: changeFavouriteModel!));
         })
         .catchError((error) {
           favorites[prodcutId] = !favorites[prodcutId]!;
           emit(FailureChangeFavoritesStoreState(errMessage: error));
         });
   }
+
   FavouritesModel? favouritesModel;
   void getFavourite() {
     emit(LoadingGetFavouriteStoreApp());
     DioHelper.getData(path: gETFAVOURITE, token: Helper.token)
         .then((value) {
           favouritesModel = FavouritesModel.fromJson(value.data);
-          emit(SuccessGetFavouriteStoreApp(
-            favouritesModel: favouritesModel!,
-          ));
+          emit(SuccessGetFavouriteStoreApp(favouritesModel: favouritesModel!));
         })
         .catchError((error) {
           emit(FailureGetFavouriteStoreApp(errMessage: error));
         });
   }
 
-  LoginModel? loginModel;
+  LoginModel? userModel;
   void getUserData() {
     emit(LoadingGetUserStoreApp());
-    DioHelper.getData(path: pROFILE, token: Helper.token).then((value) {
-      loginModel = LoginModel.fromjson(value.data);
-      emit(SuccessGetUserStoreApp());
-    },).catchError((error){
-      emit(FailureGetUserStoreApp(errMessage:error));
-    });
+    DioHelper.getData(path: pROFILE, token: Helper.token)
+        .then((value) {
+          userModel = LoginModel.fromjson(value.data);
+          emit(SuccessGetUserStoreApp(loginModel: userModel!));
+        })
+        .catchError((error) {
+          emit(FailureGetUserStoreApp(errMessage: error));
+        });
   }
 }
