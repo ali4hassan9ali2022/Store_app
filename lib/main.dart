@@ -62,7 +62,7 @@ class StoreApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             routes: Helper.routes,
-            themeMode: ThemeMode.light,
+            themeMode: BlocProvider.of<AppCubit>(context).isDark ? ThemeMode.dark : ThemeMode.light,
             theme: lightMode(),
             darkTheme: darkTheme(),
             // home: startView,
@@ -75,3 +75,5 @@ class StoreApp extends StatelessWidget {
 }
 
 //! heU92fUuH9yRl9e7rIigzn076NgYlGFYC6NnAr1ZRFGy6DvuKvEKRdtTQ02H3d7ZjXAnRw
+// ? ThemeMode.dark
+//                     : ThemeMode.light

@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store/Cubit/App_cubit/app_cubit.dart';
 import 'package:store/Cubit/store_cubit/store_cubit.dart';
 import 'package:store/Models/home_model.dart';
 
@@ -10,17 +12,31 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     var cubit = BlocProvider.of<StoreCubit>(context);
     return Container(
-      color: Colors.white,
+      color:
+          BlocProvider.of<AppCubit>(context).isDark
+              ? Colors.black
+              : Colors.white,
       child: Column(
         children: [
           Stack(
             alignment: AlignmentDirectional.bottomStart,
             children: [
-              Image(
-                image: NetworkImage(productModel.image.toString()),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: CachedNetworkImage(
+                  //   color: BlocProvider.of<AppCubit>(context).isDark
+                  // ? Colors.black
+                  // : Colors.white,
+                  imageUrl: productModel.image.toString(),
 
-                width: double.infinity,
-                height: 200,
+                  placeholder:
+                      (context, url) =>
+                          const Center(child: CircularProgressIndicator()),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  width: double.infinity,
+                  height: 200,
+                  fit: BoxFit.cover,
+                ),
               ),
               if (productModel.price != 0)
                 Container(
@@ -46,30 +62,34 @@ class ProductItem extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Text(
-                      "${productModel.price} "
-                      r"$",
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.blueAccent,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    if (productModel.price != 0)
-                      Text(
-                        "${productModel.oldPrice} "
+                    Flexible(
+                      child: Text(
+                        "${productModel.price} "
                         r"$",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                          fontSize: 10,
-                          color: Colors.red,
-                          decoration: TextDecoration.lineThrough,
+                          fontSize: 12,
+                          color: Colors.blueAccent,
                         ),
                       ),
-                    const Expanded(child: SizedBox()),
+                    ),
+                    const SizedBox(width: 6),
+                    if (productModel.price != 0)
+                      Flexible(
+                        child: Text(
+                          "${productModel.oldPrice} "
+                          r"$",
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 10,
+                            color: Colors.red,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
+                      ),
+                    const Spacer(),
                     IconButton(
                       onPressed: () {
                         cubit.changeFavorites(productModel.id!);
@@ -96,3 +116,7 @@ class ProductItem extends StatelessWidget {
     );
   }
 }
+
+
+// image: NetworkImage(),
+

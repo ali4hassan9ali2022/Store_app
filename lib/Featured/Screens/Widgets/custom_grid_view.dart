@@ -13,7 +13,7 @@ class CustomGridView extends StatelessWidget {
       crossAxisCount: 2,
       mainAxisSpacing: 1,
       crossAxisSpacing: 1,
-      childAspectRatio: 1 / 1.63,
+      childAspectRatio: 1 / 1.74,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       children: List.generate(homeModel.data!.products!.length, (index) {
